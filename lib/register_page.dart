@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'login_page.dart'; // Make sure you have this file in your project
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'login_page.dart';
+import 'firebase_options.dart';
+import 'main.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -26,17 +29,36 @@ class _RegisterPageState extends State<RegisterPage> {
     });
   }
 
-  void _register() {
+  Future<void> _register() async {
     String name = _nameController.text;
     String email = _emailController.text;
     String password = _passwordController.text;
     String confirmPassword = _confirmPasswordController.text;
 
-    // Implement your registration logic here
     if (password == confirmPassword) {
-      print('Registration successful!');
-      print('Name: $name');
-      print('Email: $email');
+      // Add the registration details to Firestore
+      try {
+        await FirebaseFirestore.instance
+            .collection('ReadArc')
+            .doc('SignIn')
+            .set({
+          'name': name,
+          'email': email,
+          'password': password,
+        });
+
+        print('Registration successful!');
+        print('Name: $name');
+        print('Email: $email');
+
+        // Navigate to the login page
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => LoginPage()),
+        );
+      } catch (e) {
+        print('Error during registration: $e');
+      }
     } else {
       print('Passwords do not match');
     }
