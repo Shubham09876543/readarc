@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'login_page.dart';
+import 'firebase_auth_service.dart'; // Import the AuthService
 import 'firebase_options.dart';
 import 'main.dart';
 
@@ -16,6 +16,8 @@ class _RegisterPageState extends State<RegisterPage> {
   final _confirmPasswordController = TextEditingController();
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
+
+  final AuthService _authService = AuthService(); // Instantiate AuthService
 
   void _togglePasswordVisibility() {
     setState(() {
@@ -36,28 +38,23 @@ class _RegisterPageState extends State<RegisterPage> {
     String confirmPassword = _confirmPasswordController.text;
 
     if (password == confirmPassword) {
-      // Add the registration details to Firestore
-      try {
-        await FirebaseFirestore.instance
-            .collection('ReadArc')
-            .doc('SignIn')
-            .set({
-          'name': name,
-          'email': email,
-          'password': password,
-        });
+      // Call the registerUser method from AuthService
+      String? errorMessage = await _authService.registerUser(
+        name: name,
+        email: email,
+        password: password,
+      );
 
+      if (errorMessage == null) {
+        // Registration successful
         print('Registration successful!');
-        print('Name: $name');
-        print('Email: $email');
-
-        // Navigate to the login page
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => LoginPage()),
         );
-      } catch (e) {
-        print('Error during registration: $e');
+      } else {
+        // Show error message
+        print('Error during registration: $errorMessage');
       }
     } else {
       print('Passwords do not match');
