@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart'; // Import Firebase Auth package
 import 'book_list.dart'; // Import the BookList page
 import 'register_page.dart'; // Import the RegisterPage for account creation
+import 'Forget_Password/forgetpassword_page.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -132,6 +133,11 @@ class _LoginPageState extends State<LoginPage> {
                 alignment: Alignment.centerRight,
                 child: TextButton(
                   onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ForgotPasswordPage()),
+                    );
                     // Implement your "Forgot password?" functionality here
                     print('Forgot password? Clicked');
                   },
