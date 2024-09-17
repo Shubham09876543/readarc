@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart'; // Import Firebase Auth package
-import 'book_list.dart';
-import 'register_page.dart';
+import 'book_list.dart'; // Import the BookList page
+import 'register_page.dart'; // Import the RegisterPage for account creation
 
 class LoginPage extends StatefulWidget {
   @override
@@ -32,15 +32,39 @@ class _LoginPageState extends State<LoginPage> {
         password: password,
       );
 
+      // Retrieve the user's display name
+      String? userName = userCredential.user?.displayName ?? 'User';
+
       // Login successful
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => BookList()),
+        MaterialPageRoute(
+          builder: (context) => BookList(userName: userName),
+        ),
       );
     } on FirebaseAuthException catch (e) {
       // Handle login errors
       print('Error during login: ${e.message}');
+      _showErrorDialog(e.message ?? 'An unknown error occurred');
     }
+  }
+
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Login Error'),
+        content: Text(message),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('OK'),
+          ),
+        ],
+      ),
+    );
   }
 
   @override

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'book_page.dart'; // Import the file where MyHomePage is defined
+import 'book_page.dart'; // Import the file where MyBookPage is defined
 
 class Book {
   final String title;
@@ -10,7 +10,9 @@ class Book {
 }
 
 class BookList extends StatefulWidget {
-  const BookList({Key? key}) : super(key: key);
+  final String userName;
+
+  const BookList({Key? key, required this.userName}) : super(key: key);
 
   @override
   _BookListState createState() => _BookListState();
@@ -71,7 +73,7 @@ class _BookListState extends State<BookList> {
             backgroundImage: AssetImage('assets/profile_pic.png'),
           ),
         ),
-        title: const Text('Hi, Shubham!'),
+        title: Text('Hi! ${widget.userName}'),
         actions: [
           IconButton(
             onPressed: () {

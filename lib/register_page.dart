@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'login_page.dart';
 import 'firebase_auth_service.dart'; // Import the AuthService
 import 'firebase_options.dart';
 import 'main.dart';
+import 'book_list.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -47,6 +49,12 @@ class _RegisterPageState extends State<RegisterPage> {
 
       if (errorMessage == null) {
         // Registration successful
+        User? user = FirebaseAuth.instance.currentUser;
+        if (user != null) {
+          // Update the user's display name
+          await user.updateProfile(displayName: name);
+        }
+
         print('Registration successful!');
         Navigator.pushReplacement(
           context,
