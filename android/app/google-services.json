@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "844679899822",
+    "project_id": "readarc-dcf31",
+    "storage_bucket": "readarc-dcf31.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:844679899822:android:ad42deaff86fcb26161b3f",
+        "android_client_info": {
+          "package_name": "com.Readarc.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHajAuTISBxtmFMveZ_4rnFc-IAXg-Gb4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
