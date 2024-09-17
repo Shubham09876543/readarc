@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart'; // Import Firebase Auth package
 import 'book_list.dart';
 import 'register_page.dart';
 
@@ -12,22 +13,34 @@ class _LoginPageState extends State<LoginPage> {
   final _passwordController = TextEditingController();
   bool _obscurePassword = true;
 
+  final FirebaseAuth _auth = FirebaseAuth.instance; // Instantiate FirebaseAuth
+
   void _togglePasswordVisibility() {
     setState(() {
       _obscurePassword = !_obscurePassword;
     });
   }
 
-  void _login() {
+  Future<void> _login() async {
     String email = _emailController.text;
     String password = _passwordController.text;
 
-    // Add login logic here (for example, authenticate the user)
-    // Navigate to the BookList page after successful login
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => BookList()),
-    );
+    try {
+      // Sign in with email and password
+      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      // Login successful
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => BookList()),
+      );
+    } on FirebaseAuthException catch (e) {
+      // Handle login errors
+      print('Error during login: ${e.message}');
+    }
   }
 
   @override
@@ -118,7 +131,6 @@ class _LoginPageState extends State<LoginPage> {
               // Create new account link
               TextButton(
                 onPressed: () {
-                  // Navigate to the RegisterPage
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => RegisterPage()),
