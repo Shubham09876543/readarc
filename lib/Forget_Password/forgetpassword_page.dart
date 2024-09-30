@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:readarc/Forget_Password/email_verification_page.dart';
 
 class ForgotPasswordPage extends StatelessWidget {
+  const ForgotPasswordPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -9,7 +11,7 @@ class ForgotPasswordPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -20,13 +22,13 @@ class ForgotPasswordPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Forgot password',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 16),
-            Text('Please enter your email to reset the password'),
-            SizedBox(height: 32),
+            const SizedBox(height: 16),
+            const Text('Please enter your email to reset the password'),
+            const SizedBox(height: 32),
             TextField(
               decoration: InputDecoration(
                 labelText: 'Email',
@@ -35,7 +37,7 @@ class ForgotPasswordPage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 32),
+            const SizedBox(height: 32),
             SizedBox(
               width: width, // Responsive button width
               child: ElevatedButton(
@@ -46,14 +48,14 @@ class ForgotPasswordPage extends StatelessWidget {
                   );
                   // Handle reset password logic
                 },
-                child: Text('Reset Password'),
                 style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(vertical: 16),
-                  textStyle: TextStyle(fontSize: 16),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  textStyle: const TextStyle(fontSize: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
+                child: Text('Reset Password'),
               ),
             ),
           ],
